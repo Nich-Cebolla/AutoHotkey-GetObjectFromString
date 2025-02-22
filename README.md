@@ -1,15 +1,16 @@
-# AutoHotkey-GetObjectFromString
+# GetObjectFromString
 An AutoHotkey (AHK) function that converts a string object path to an object reference.
 
-## AutoHotkey Forum Link
+## AutoHotkey Forum Post
+https://www.autohotkey.com/boards/viewtopic.php?f=83&t=136004
 
 ## Parameters
-- {String} Path: The object path string.
+- {String} Path - The object path string.
 
-## Retusn
-- {Object} The object reference.
+## Returns
+- {Object} - The object reference.
 
-
+## Examples
 ```ahk
   obj := {
       prop1: [1, 2, Map(
@@ -25,7 +26,7 @@ An AutoHotkey (AHK) function that converts a string object path to an object ref
   class Test {
       class NestedClass {
           InstanceProp {
-              Get{
+              Get {
                   return ['Val1', { Prop: 'Hello, world!' }]
               }
           }
@@ -36,6 +37,9 @@ An AutoHotkey (AHK) function that converts a string object path to an object ref
   OutputDebug(Obj.Prop) ; Hello, world!
 ```
 
+### GetObjectFromString.ahk
+Contains the code for the `GetObjectFromString` function.
+
 ## Changelog
 2025-02-22
-- Uploaded library
+- Uploaded function
