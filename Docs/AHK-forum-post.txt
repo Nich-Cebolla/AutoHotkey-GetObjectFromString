@@ -39,6 +39,7 @@ ahk
 
 [/code]
 
+[color=#800000][size=165][b]Contents[/b][/size][/color]
 [color=#000000][size=135][b]GetObjectFromString.ahk[/b][/size][/color]
 [color=#000000][size=125]Contains the code for the [c]GetObjectFromString[/c] function.[/size][/color]
 [code]
