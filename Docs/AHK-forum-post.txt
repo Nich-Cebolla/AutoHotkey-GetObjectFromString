@@ -12,7 +12,7 @@
 
 [color=#800000][size=165][b]Examples[/b][/size][/color]
 [code]
-ahk
+
   obj := {
       prop1: [1, 2, Map(
               'key1', 'value1',
