@@ -37,6 +37,8 @@ https://www.autohotkey.com/boards/viewtopic.php?f=83&t=136004
   OutputDebug(Obj.Prop) ; Hello, world!
 ```
 
+## Contents
+
 ### GetObjectFromString.ahk
 Contains the code for the `GetObjectFromString` function.
 
