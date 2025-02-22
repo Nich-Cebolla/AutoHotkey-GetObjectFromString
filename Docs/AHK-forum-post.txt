@@ -80,7 +80,7 @@
  *
  */
 GetObjectFromString(Str) {
-    static Pattern := '(?<=\.)[\w_\d]+(?COnProp)|\[\s*\K\d+(?COnIndex)|\[\s*(?<quote>[`'"])(?<key>.*?)(?<!``)(?:````)*\g{quote}(?COnKey)'
+    static Pattern := '(?<=\.)[\w_\d]+(?COnProp)|\[\s*\K-?\d+(?COnIndex)|\[\s*(?<quote>[`'"])(?<key>.*?)(?<!``)(?:````)*\g{quote}(?COnKey)'
     RegExMatch(Str, '^[\w\d_]+', &InitialSegment)
     Pos := InitialSegment.Pos + InitialSegment.Len
     NewObj := %InitialSegment[0]%
