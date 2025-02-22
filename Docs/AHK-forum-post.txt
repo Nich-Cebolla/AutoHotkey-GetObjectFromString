@@ -1,0 +1,105 @@
+[color=#800000][size=165][b]GetObjectFromString[/b][/size][/color]
+[color=#000000][size=125]An AutoHotkey (AHK) function that converts a string object path to an object reference.[/size][/color]
+
+[color=#800000][size=165][b]Github link[/b][/size][/color]
+[size=125]https://github.com/Nich-Cebolla/AutoHotkey-GetObjectFromString[/size]
+
+[color=#800000][size=165][b]Parameters[/b][/size][/color]
+[list][*][size=112][color=#008000][b]{String}[/color] Path[/b] - The object path string.[/size][/list]
+
+[color=#800000][size=165][b]Returns[/b][/size][/color]
+[list][*][size=112][color=#008000][b]{Object}[/color][/b] - The object reference.[/size][/list]
+
+[color=#800000][size=165][b]Examples[/b][/size][/color]
+[code]
+ahk
+  obj := {
+      prop1: [1, 2, Map(
+              'key1', 'value1',
+              'key2', {prop2: 2, prop3: [3, 4]}
+          )
+      ]
+  }
+  Path := 'obj.prop1[3]["key2"].prop3'
+  Obj := GetObjectFromString(Path)
+  OutputDebug(Obj[2]) ; 4
+
+  class Test {
+      class NestedClass {
+          InstanceProp {
+              Get {
+                  return ['Val1', { Prop: 'Hello, world!' }]
+              }
+          }
+      }
+  }
+  Path := 'Test.NestedClass.Prototype.InstanceProp[2]'
+  Obj := GetObjectFromString(Path)
+  OutputDebug(Obj.Prop) ; Hello, world!
+
+[/code]
+
+[color=#000000][size=135][b]GetObjectFromString.ahk[/b][/size][/color]
+[color=#000000][size=125]Contains the code for the [c]GetObjectFromString[/c] function.[/size][/color]
+[code]
+
+/**
+ * @description - Converts a string path to an object reference. The object at the input path must
+ * exist in the current scope of the function call.
+ * @param {String} Str - The object path.
+ * @returns {Object} - The object reference.
+ * @example
+ *
+    obj := {
+        prop1: [1, 2, Map(
+                'key1', 'value1',
+                'key2', {prop2: 2, prop3: [3, 4]}
+            )
+        ]
+    }
+    Path := 'obj.prop1[3]["key2"].prop3'
+    Obj := GetObjectFromString(Path)
+    OutputDebug(Obj[2]) ; 4
+ * @
+ * This is compatible with class references.
+ * @example
+ *
+    class Test {
+        class NestedClass {
+            InstanceProp {
+                Get{
+                    return ['Val1', { Prop: 'Hello, world!' }]
+                }
+            }
+        }
+    }
+    Path := 'Test.NestedClass.Prototype.InstanceProp[2]'
+    Obj := GetObjectFromString(Path)
+    OutputDebug(Obj.Prop) ; Hello, world!
+ *
+ */
+GetObjectFromString(Str) {
+    static Pattern := '(?<=\.)[\w_\d]+(?COnProp)|\[\s*\K\d+(?COnIndex)|\[\s*([`'"])(?<key>.*?)(?<!\\)(?:\\\\)*\1(?COnKey)'
+    RegExMatch(Str, '^[\w\d_]+', &InitialSegment)
+    Pos := InitialSegment.Pos + InitialSegment.Len
+    NewObj := %InitialSegment[0]%
+    while RegExMatch(Str, Pattern, &Match, Pos)
+        Pos := Match.Pos + Match.Len
+    return NewObj
+    OnProp(Match, *) {
+        NewObj := NewObj.%Match[0]%
+    }
+    OnIndex(Match, *) {
+        NewObj := NewObj[Number(Match[0])]
+    }
+    OnKey(Match, *) {
+        NewObj := NewObj[Match['key']]
+    }
+}
+
+[/code]
+
+[color=#800000][size=165]Changelog[/size][/color]
+[color=#000000][size=120][b]2025-02-22[/b][/size][/color]
+[list][*][color=#000000][size=125]Uploaded function[/size][/color][/list]
+
